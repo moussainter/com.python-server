@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="PyScript 2025.5.1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>PyScript 2025.5.1</title>
+
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+  </head>
+  <body>
+    <h1>Hello world!</h1>
+    <p>These are the Python interpreters in PyScript 2025.5.1:</p>
+
+    <py-script src="//facture.py"> </py-script>
+    <py-script>
+      from datetime import datetime heure = datetime.now().strftime("%H:%M:%S")
+      print(f"Bonjour, il est {heure} !")
+    </py-script>
+
+    <form action="" method="GET">
+      <div>
+        <label>numero</label>
+        <input type="text" name="numero" id="numero" />
+        <label>date</label>
+        <input type="date" name="date" id="date" />
+        <label>client</label>
+        <select name="client" id="client">
+          <option value="clt1">Client 1</option>
+          <option value="clt2">Client 2</option>
+          <option value="clt3">Client 3</option>
+          <option value="clt4">Client 4</option>
+        </select>
+      </div>
+
+      <div>
+        <table border="1px">
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>Description</th>
+              <th>Quantité</th>
+              <th>Prix Unitaire</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td id="numLigne1">1</td>
+              <td>
+                <input type="text" name="description[]" id="descriptiont1" />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  name="quantite[]"
+                  classe="element"
+                  id="quantite1"
+                />
+              </td>
+              <td>
+                <input type="text" name="prix[]" classe="element" id="prix1" />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  name="$(totalInputsl[])"
+                  id="total1"
+                  readonly
+                />
+              </td>
+            </tr>
+            <tr>
+              <td id="numLigne2">2</td>
+              <td>
+                <input type="text" name="description[]" id="description2" />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  name="quantite[]"
+                  classe="element"
+                  id="quantite2"
+                />
+              </td>
+              <td>
+                <input type="text" name="prix[]" classe="element" id="prix2" />
+              </td>
+              <td>
+                <input type="text" name="total2" id="total2" readonly />
+              </td>
+            </tr>
+            <tr>
+              <td id="numLigne3">3</td>
+              <td>
+                <input type="text" name="description[]" id="description3" />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  name="quantite[]"
+                  classe="element"
+                  id="quantite3"
+                />
+              </td>
+              <td>
+                <input type="text" name="prix[]" classe="element" id="prix3" />
+              </td>
+              <td>
+                <input type="text" name="total[]" id="total3" readonly />
+              </td>
+            </tr>
+            <tr>
+              <td>MontantHT</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>
+                <input type="text" name="montantHT" id="montantHT" readonly />
+              </td>
+            </tr>
+            <tr>
+              <td>tva</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>
+                <input type="text" name="tva" id="tva" readonly />
+              </td>
+            </tr>
+            <tr>
+              <td>MontantTTC</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>
+                <input type="text" name="montantTTC" id="montantTTC" readonly />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div>
+        <input type="submit" name="submit" id="submit" value="Valider" />
+      </div>
+    </form>
+    <script>
+      function produit() {
+        let id = document.getElementsByTagName("input")[0].id;
+        console.log(id);
+        var numero = id.substring(id.length - 1, id.length);
+        console.log(numero);
+        var quantite = document.getElementById("quantite" + numero).value;
+        var prix = document.getElementById("prix" + numero).value;
+      }
+      const elements = document.querySelectorAll(".element");
+      for (let i = 0; i < elements.length; i++) {
+        elements[i].addEventListener("change", produit, false);
+        elements[i].addEventListener("change", produit, false);
+      }
+    </script>
+  </body>
+</html>
