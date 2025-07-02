@@ -82,21 +82,21 @@ html = """
           <tbody>
             <tr>
               <td><input type="text" name="produit" id="produit1" /></td>
-              <td><input type="text" name="quantite" id="quantite1" /></td>
-              <td><input type="text" name="prix" id="prix1" /></td>
-              <td><input type="text" name="total" id="total1" readonly /></td>
+              <td><input type="text" name="quantite" class="element" id="quantite1" /></td>
+              <td><input type="text" name="prix" class="element" id="prix1" /></td>
+              <td><input type="text" name="total" class="sousTotal" id="total1" readonly /></td>
             </tr>
             <tr>
               <td><input type="text" name="produit" id="produit2" /></td>
-              <td><input type="text" name="quantite" id="quantite2" /></td>
-              <td><input type="text" name="prix" id="prix2" /></td>
-              <td><input type="text" name="total" id="total2" readonly /></td>
+              <td><input type="text" name="quantite" class="element" id="quantite2" /></td>
+              <td><input type="text" name="prix" class="element" id="prix2" /></td>
+              <td><input type="text" name="total" class="sousTotal" id="total2" readonly /></td>
             </tr>
             <tr>
               <td><input type="text" name="produit" id="produit3" /></td>
-              <td><input type="text" name="quantite" id="quantite3" /></td>
-              <td><input type="text" name="prix" id="prix3" /></td>
-              <td><input type="text" name="total" id="total3" readonly /></td>
+              <td><input type="text" name="quantite" class="element" id="quantite3" /></td>
+              <td><input type="text" name="prix" class="element" id="prix3" /></td>
+              <td><input type="text" name="total" class="sousTotal" id="total3" readonly /></td>
             </tr>
 
             <tr>
@@ -124,22 +124,48 @@ html = """
   <script>
   
     function produit() {
-        let quantite1 = document.getElementById("quantite1").value;
-        let prix1 = document.getElementById("prix1").value;
-        let total1 = document.getElementById("total1");
-        if (quantite1 == "" || prix1 == "") {
-            total1.value = "";
-        } 
-        else {
-        total1.value = parseFloat(quantite1) * parseFloat(prix1);}
+        let  num = this.getAttribute("id");
+      
+        let position = num.substring(num.length - 1, num.length);
+       
+        let quantite = document.getElementById("quantite" + position).value;
+        let prix = document.getElementById("prix" + position).value;
+        let total = document.getElementById("total" + position);
+        let sousTotal = parseFloat(quantite) * parseFloat(prix);
+        
+        if ((sousTotal === "") || (isNaN(sousTotal))) {
+            total.value = "Une case est vide";
         }
-            
-    let quantite1 = document.getElementById("quantite1");
-    let prix1 = document.getElementById("prix1");
-    let total = document.getElementById("total1");
+        else if (sousTotal < 0) {
+            total.value = "Valeur négative";
+        } 
+        
+        else {
+        total.value = sousTotal;
+        }
+        
+        let montantTotal = 0
+        let sousTotals = document.getElementsByClassName("sousTotal");
+        for (let i = 0; i < sousTotals.length; i++) {
+          if (!isNaN(parseFloat(sousTotals[i].value))) montantTotal = montantTotal + parseFloat(sousTotals[i].value);   
+        }
+        let totalHT = document.getElementById("totalHT");
+         totalHT.value = montantTotal;
+         
+        let tva = document.getElementById("tva");
+         tva.value = montantTotal * 0.2;
+        
+        let montantTTC = document.getElementById("montantTTC");
+          montantTTC.value = montantTotal + parseFloat(tva.value);
+        
+        
+    }
+           
+    let elements = document.getElementsByClassName("element");
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].addEventListener("change", produit, false);
+    }
     
-    quantite1.addEventListener("change", produit, false);
-    prix1.addEventListener("change", produit, false);
   </script>
 </html>
 
